@@ -38,6 +38,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.reorder.Fragment.OrderFragment.used_mileage;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -100,12 +102,17 @@ public class SeatReserveFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        OrderFragment.cb_mileage.setChecked(false);
         View view=inflater.inflate(R.layout.fragment_seat_reserve, container, false);
         bt_order_ok=view.findViewById(R.id.bt_order_ok);
         grid= view.findViewById(R.id.grid);
         context=grid.getContext();
         checked_count=0;
         max_count=1;
+
+
+        Log.d("mile","used_mileage 좌석예약에서:"+used_mileage);
+        final SeatReserveFragment seatReserveFragment=new SeatReserveFragment();
 
         Log.d("seat",""+CurrentStoreSeatInfo.getStoreSeat().getStoreSeatInfo().getSeat_num());
         int st_num= CurrentStoreSeatInfo.getStoreSeat().getStoreSeatInfo().getSeat_num();
@@ -169,6 +176,9 @@ public class SeatReserveFragment extends Fragment implements View.OnClickListene
                                 object.put("menu_price", menu_price);
                                 object.put("menu_count", menu_count);
                                 object.put("seat_id", seat_id);
+                                object.put("used_mileage",Integer.toString(used_mileage));
+
+
                                 list.add(object);
                             }
                             //메뉴아이디, 메뉴 수량 넣어야 해
@@ -239,6 +249,8 @@ public class SeatReserveFragment extends Fragment implements View.OnClickListene
                             input.put("menu_price",menu_price);
                             input.put("menu_count",menu_count);
                             input.put("seat_id",seat_id);
+                            input.put("used_mileage", String.valueOf(used_mileage));
+
                             Log.d("order","input= "+input);
 
                             Retrofit retrofit = new Retrofit.Builder()

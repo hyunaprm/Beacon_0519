@@ -323,9 +323,13 @@ public class NavigationnActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if(fragment!=homeFragment)
+            if(fragment==homeFragment){
+
+            }else if(fragment==OrderFragment){
+                Toast.makeText(mContext,"주문시 뒤로가기 버튼을 누를 수 없습니다.",Toast.LENGTH_SHORT).show();
+            }else
+            {
                 super.onBackPressed();
-            else{
             }
         }
     }
